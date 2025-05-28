@@ -13,6 +13,27 @@ leitores = [
     ['Beatriz Santos', '999.888.777-66', '(31) 99876-5432']
 ]
 
+emprestimos = {
+    '0001': deque(),
+    '0002': deque(),
+    '0003': deque(),
+    '0004': deque()
+}
+
+disponibilidade = {
+    '0001': True,
+    '0002': True,
+    '0003': True,
+    '0004': True
+}
+
+historico = []
+
+def listar_livros():
+    print("\nCatálogo de Livros:")
+    for livro in livros:
+        print(livro)
+
 def listar_livros():
     print("\nCatálogo de Livros:")
     for livro in livros:
@@ -57,6 +78,15 @@ def adicionar_leitor():
     leitores.append([nome, cpf, telefone])
     print(f"Leitor '{nome}' cadastrado com sucesso.")
 
+def solicitar_emprestimo(codigo, leitor):
+    if codigo not in emprestimos:
+        print(f"Erro: Livro com código {codigo} não existe.")
+        return
+    emprestimos[codigo].append(leitor)
+    print(f"{leitor} entrou na fila para o livro {codigo}.")
+    if disponibilidade[codigo] and emprestimos[codigo][0] == leitor:
+        emprestar_livro(codigo)
+
 def emprestar_livro(codigo):
     if codigo not in emprestimos:
         print(f"Erro: Livro com código {codigo} não existe.")
@@ -99,3 +129,34 @@ def mostrarHistorico():
             print(f"Livro: {titulo}, Total de empréstimos: {quantidade}")
     else:
         print("\nHistórico está vazio.")
+
+def desfazer_ultimo_emprestimo():
+    if not historico:
+        print("Nenhum empréstimo para desfazer.")
+        return
+
+    titulo, leitor = historico.pop()
+    codigo = None
+    
+    for livro in livros:
+        if livro['titulo'] == titulo:
+            codigo = livro['Codigo do Livro']
+            break
+    else:
+        print("Livro não encontrado no sistema.")
+        return
+
+    if codigo in emprestimos:
+        fila_emprestimos = emprestimos[codigo]
+    else:
+        fila_emprestimos = []
+    
+    if fila_emprestimos and fila_emprestimos[0] == leitor:
+        fila_emprestimos.popleft() 
+        if fila_emprestimos:
+            emprestar_livro(codigo) 
+        else:
+            disponibilidade[codigo] = True 
+        print(f"Empréstimo de '{titulo}' para {leitor} desfeito. Estado do sistema atualizado.")
+    else:
+        print(f"Empréstimo de '{titulo}' para {leitor} removido do histórico.")
