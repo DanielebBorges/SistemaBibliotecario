@@ -7,12 +7,18 @@ livros = [
     {'Codigo do Livro': '0004', 'titulo': 'Memórias Póstumas de Brás Cubas', 'ano': '1881', 'autor': 'Machado de Assis', 'genero': 'Romance'}
 ]
 
+leitores = [
+    ['Ana Souza', '111.222.333-44', '(11) 98765-4321'],
+    ['Carlos Lima', '555.666.777-88', '(21) 91234-5678'],
+    ['Beatriz Santos', '999.888.777-66', '(31) 99876-5432']
+]
+
 def listar_livros():
     print("\nCatálogo de Livros:")
     for livro in livros:
         print(livro)
 
-        def adicionar_livro(codigo, titulo, ano, autor, genero, emprestimos, disponibilidade):
+def adicionar_livro(codigo, titulo, ano, autor, genero, emprestimos, disponibilidade):
     for livro in livros:
         if livro['Codigo do Livro'] == codigo:
             print(f"\nErro: Já existe um livro com o código {codigo}.")
@@ -29,6 +35,28 @@ def listar_livros():
     disponibilidade[codigo] = True
     
     print(f"\nLivro '{titulo}' adicionado com sucesso.")
+
+def listar_leitores():
+    if leitores:
+        print("\nLista de Leitores:")
+        for leitor in leitores:
+            print(f"Nome: {leitor[0]}, CPF: {leitor[1]}, Telefone: {leitor[2]}")
+    else:
+        print("Nenhum leitor cadastrado.")
+
+def adicionar_leitor():
+    nome = input("Nome do leitor: ")
+    cpf = input("CPF do leitor (xxx.xxx.xxx-xx): ")
+    telefone = input("Telefone do leitor: ")
+
+    for leitor in leitores:
+        if leitor[1] == cpf:
+            print(f"Erro: CPF {cpf} já cadastrado para o leitor {leitor[0]}.")
+            return
+    
+    leitores.append([nome, cpf, telefone])
+    print(f"Leitor '{nome}' cadastrado com sucesso.")
+
 def emprestar_livro(codigo):
     if codigo not in emprestimos:
         print(f"Erro: Livro com código {codigo} não existe.")
