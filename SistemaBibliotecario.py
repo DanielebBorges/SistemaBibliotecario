@@ -83,3 +83,19 @@ def devolver_livro(codigo):
         emprestar_livro(codigo)
     else:
         disponibilidade[codigo] = True
+
+def mostrarHistorico():
+    if historico:
+        qtd = {}
+        for item in historico:
+            titulo = item[0]
+            if titulo in qtd:
+                qtd[titulo] += 1
+            else:
+                qtd[titulo] = 1
+
+        print("\nHistórico de empréstimos:")
+        for titulo, quantidade in qtd.items():
+            print(f"Livro: {titulo}, Total de empréstimos: {quantidade}")
+    else:
+        print("\nHistórico está vazio.")
