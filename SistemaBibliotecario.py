@@ -34,11 +34,6 @@ def listar_livros():
     for livro in livros:
         print(livro)
 
-def listar_livros():
-    print("\nCatálogo de Livros:")
-    for livro in livros:
-        print(livro)
-
 def adicionar_livro(codigo, titulo, ano, autor, genero, emprestimos, disponibilidade):
     for livro in livros:
         if livro['Codigo do Livro'] == codigo:
@@ -160,3 +155,56 @@ def desfazer_ultimo_emprestimo():
         print(f"Empréstimo de '{titulo}' para {leitor} desfeito. Estado do sistema atualizado.")
     else:
         print(f"Empréstimo de '{titulo}' para {leitor} removido do histórico.")
+
+while True:
+    print("\nMENU SISTEMA BIBLIOTECARIO")
+    print("1 - Listar livros")
+    print("2 - Adicionar livro")
+    print("3 - Listar leitores")
+    print("4 - Adicionar leitor")
+    print("5 - Solicitar empréstimo")
+    print("6 - Devolver livro")
+    print("7 - Mostrar histórico")
+    print("8 - Desfazer último empréstimo")
+    print("9 - Sair")
+
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == '1':
+        listar_livros()
+
+    elif opcao == '2':
+        codigo = input("Código do Livro: ")
+        titulo = input("Título: ")
+        ano = input("Ano: ")
+        autor = input("Autor: ")
+        genero = input("Gênero: ")
+        adicionar_livro(codigo, titulo, ano, autor, genero, emprestimos, disponibilidade)
+
+    elif opcao == '3':
+        listar_leitores()
+
+    elif opcao == '4':
+        adicionar_leitor()
+
+    elif opcao == '5':
+        leitor = input("Nome do leitor: ")
+        codigo = input("Código do livro: ")
+        solicitar_emprestimo(codigo, leitor)
+
+    elif opcao == '6':
+        codigo = input("Código do livro: ")
+        devolver_livro(codigo)
+
+    elif opcao == '7':
+        mostrarHistorico()
+
+    elif opcao == '8':
+        desfazer_ultimo_emprestimo()
+
+    elif opcao == '9':
+        print("Saindo...")
+        break
+
+    else:
+        print("Opção inválida. Tente novamente.")
