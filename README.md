@@ -39,6 +39,22 @@ python SistemaBibliotecario.py
 Assim ja estará clonado e poderá utilizar seu codigo como preferir.
 
 ## Como o sistema funciona?  
+
+```
+livros = [
+   {'Codigo do Livro': '0001', 'titulo': 'O Pequeno Príncipe', 'ano': '1943', 'autor': 'Antoine de Saint-Exupéry', 'genero': 'Fábula'},
+   {'Codigo do Livro': '0002', 'titulo': 'Percy Jackson e o Ladrão de Raios', 'ano': '2005', 'autor': 'Rick Riordan', 'genero': 'Fantasia'},
+   {'Codigo do Livro': '0003', 'titulo': 'A Seleção', 'ano': '2012', 'autor': 'Kiera Cass', 'genero': 'Romance Distópico'},
+   {'Codigo do Livro': '0004', 'titulo': 'Memórias Póstumas de Brás Cubas', 'ano': '1881', 'autor': 'Machado de Assis', 'genero': 'Romance'}
+]
+```
+O uso do dicionário é uma escolha prática porque ele permite organizar e acessar as informações de forma muito eficiente. Cada livro é representado por um conjunto de pares chave-valor, onde as chaves são atributos como "Código do Livro", "Título", "Ano", "Autor" e "Gênero". Isso facilita o acesso rápido aos dados. Por exemplo, se for necessário saber o autor de um livro, basta acessar a chave 'autor', sem precisar percorrer uma lista ou fazer buscas mais complicadas.
+ 
+Além disso, o dicionário oferece flexibilidade para alterar ou adicionar informações de maneira simples. Caso seja necessário atualizar algum dado, como o ano de lançamento de um livro, isso pode ser feito de forma direta. Ele também facilita a filtragem e a manipulação dos dados, como organizar os livros por gênero ou autor.
+ 
+Por ser uma estrutura leve e direta, o dicionário é uma escolha ideal para esse tipo de armazenamento de dados simples, sem a necessidade de algo mais complexo, como um banco de dados. Ele torna o código mais organizado, claro e fácil de modificar.
+
+
 Os **leitores estão classificados em uma estrutura de lista**. A lista externa armazena todos os leitores no geral já as listas internas armazenam cada leitor individualmente, cada lista interna contém 3 elementos sendo eles: Nome, CPF e Telefone. Com essa estrutura é possível acessar seus dados por meio do índice assim como demonstrado nas funções "adicionar_leitor" e "mostrar leitores" usando o nome do elemento com o índice que deseja na frente. Essa estrutura é fácil de ser manipulada e muito pratica para conjuntos pequenos assim como esse com apenas 3 elementos. 
 
 ```
@@ -70,7 +86,53 @@ disponibilidade = {
 A variável **histórico** é uma lista utilizada para registrar todos os empréstimos que já foram realizados no sistema. Toda vez que um livro é emprestado para o leitor uma tupla contendo o título do livro e o nome do leitor é adicionado a lista. Por exemplo, após um empréstimo, o histórico pode ficar assim: [('O Pequeno Príncipe', 'Ana Souza'), ('A Seleção', 'Carlos Lima')]. Escolhemos a lista porque os empréstimos precisam ser adicionados ao final da sequência, sem necessidade de busca por chave ou estrutura complexa. O uso de tuplas dentro da lista faz com que cada registro fique compacto e claro, mostrando apenas informações essenciais de forma imutável.
 ```
 historico = []
+
 ```
+
+```
+def listar_livros():
+   print("\nCatálogo de Livros:")
+   for livro in livros:
+       print(livro)
+```
+ 
+A função listar_livros() tem como objetivo exibir uma lista de todos os livros armazenados na variável livros. Ela começa imprimindo a mensagem "Catálogo de Livros:", indicando que a lista a seguir contém todos os livros do catálogo. O uso de \n (quebra de linha) antes dessa mensagem ajuda a manter a saída formatada, separando o título do catálogo de outras informações que possam ter sido impressas anteriormente.
+ 
+A variável livros é uma lista que armazena múltiplos dicionários, sendo que cada dicionário contém as informações de um livro específico, como código, título, autor, ano de publicação e gênero. A lista foi escolhida porque permite armazenar vários livros de maneira ordenada, facilitando a iteração sobre os itens para acessá-los e exibi-los.
+ 
+Cada livro é representado por um dicionário, onde as chaves são os atributos do livro, como 'Codigo do Livro', 'titulo', 'autor', 'ano' e 'genero', e os valores são as informações específicas de cada livro. O uso de dicionários torna o acesso a cada atributo muito fácil, permitindo organizar as informações de maneira clara.
+ 
+A função então utiliza um laço de repetição (for) para percorrer a lista livros. A cada iteração, o laço acessa um dicionário diferente, representando um livro. Durante o loop, os detalhes de cada livro são extraídos e preparados para serem exibidos. A função imprime o conteúdo do dicionário correspondente a cada livro usando o comando print(livro), o que exibe os dados no formato padrão de um dicionário Python. Para uma apresentação mais legível ao usuário, seria possível formatar a impressão para que os dados apareçam de forma mais estruturada, como exibindo cada atributo do livro de maneira separada.
+ 
+Dessa forma, a função listar_livros() organiza e exibe os livros de maneira clara e eficiente, permitindo que o usuário visualize as informações dos livros armazenados na lista.
+
+```
+ef adicionar_livro(codigo, titulo, ano, autor, genero, emprestimos, disponibilidade):
+   for livro in livros:
+       if livro['Codigo do Livro'] == codigo:
+           print(f"\nErro: Já existe um livro com o código {codigo}.")
+           return
+   novo_livro = {
+       'Codigo do Livro': codigo,
+       'titulo': titulo,
+       'ano': ano,
+       'autor': autor,
+       'genero': genero
+   }
+   livros.append(novo_livro)
+   emprestimos[codigo] = deque()
+   disponibilidade[codigo] = True
+   
+   print(f"\nLivro '{titulo}' adicionado com sucesso.")
+ 
+```
+A função adicionar_livro() tem como objetivo adicionar um novo livro à lista de livros, garantindo que não haja duplicação de códigos. Ela começa verificando se já existe um livro com o código fornecido. Para isso, a função percorre a lista livros com um laço de repetição (for), comparando o código do livro presente em cada dicionário com o código fornecido. Caso encontre um livro com o mesmo código, a função imprime uma mensagem de erro, dizendo que já existe um livro com esse código, e então retorna imediatamente, sem adicionar o novo livro.
+ 
+Se o código fornecido não for encontrado na lista, a função cria um novo dicionário, chamado novo_livro, que contém as informações do livro a ser adicionado, como código, título, ano, autor e gênero. Esse dicionário é então adicionado à lista livros utilizando o comando livros.append(novo_livro).
+ 
+Além disso, a função atualiza dois outros dicionários, emprestimos e disponibilidade, que gerenciam o status do livro em relação ao empréstimo e à disponibilidade. Para o dicionário emprestimos, a função cria uma fila vazia (usando deque()) associada ao código do livro. Isso significa que, inicialmente, o livro não foi emprestado a ninguém. Para o dicionário disponibilidade, a função associa o código do livro ao valor True, indicando que o livro está disponível para ser emprestado.
+ 
+Por fim, a função imprime uma mensagem confirmando que o livro foi adicionado com sucesso, utilizando o título do livro na mensagem para que a resposta seja mais clara para o usuário. Dessa forma, a função garante que novos livros sejam incluídos corre
 
 A função **listar leitores**, como o próprio nome indica, exibe todos os leitores cadastrados na lista. O bloco começa com um if que verifica se a lista está vazia. Caso não esteja, o código entra em um for que percorre cada leitor na lista e imprime seus dados na ordem: nome, CPF e telefone, que são obtidos dos índices 0, 1 e 2, respectivamente. Por fim, se a lista estiver vazia, a função informa ao usuário que nenhum leitor está cadastrado.  
 
@@ -111,6 +173,48 @@ def solicitar_emprestimo(codigo, leitor):
     print(f"{leitor} entrou na fila para o livro {codigo}.")
     if disponibilidade[codigo] and emprestimos[codigo][0] == leitor:
         emprestar_livro(codigo)
+
+```
+
+def emprestar_livro(codigo):
+   if codigo not in emprestimos:
+       print(f"Erro: Livro com código {codigo} não existe.")
+       return
+   leitor = emprestimos[codigo][0]
+   disponibilidade[codigo] = False
+   for livro in livros:
+       if livro['Codigo do Livro'] == codigo:
+           titulo = livro['titulo']
+           break
+   historico.append((titulo, leitor))
+   print(f"Livro {codigo} emprestado para {leitor}.")
+ 
+```
+A função emprestar_livro() tem como objetivo realizar o empréstimo de um livro, marcando sua disponibilidade como não disponível e registrando o empréstimo no histórico. Primeiro, ela verifica se o código do livro informado existe no dicionário emprestimos. Se o código não for encontrado, significa que o livro não foi emprestado, então a função imprime uma mensagem de erro, dizendo que não existe um livro com esse código e retorna, sem fazer mais nada.
+ 
+Se o código do livro existir, a função pega o primeiro leitor da fila de empréstimos associada ao livro, já que o primeiro da fila é sempre o próximo a pegar o livro. Esse leitor é armazenado na variável leitor.
+ 
+A função então marca o livro como não disponível no dicionário disponibilidade, mudando o valor para False, o que significa que o livro não pode ser emprestado para outras pessoas enquanto não for devolvido.
+
+```
+def devolver_livro(codigo):
+   if codigo not in emprestimos:
+       print(f"Erro: Livro com código {codigo} não existe.")
+       return
+   if not emprestimos[codigo]:
+       print("Nenhum leitor na fila.")
+       return
+   leitor = emprestimos[codigo].popleft()
+   print(f"{leitor} devolveu o livro {codigo}.")
+   if emprestimos[codigo]:
+       emprestar_livro(codigo)
+   else:
+       disponibilidade[codigo] = True
+```
+A função devolver_livro() tem como objetivo gerenciar a devolução de um livro. Primeiro, ela verifica se o livro com o código informado existe na lista de empréstimos. Se o livro não for encontrado, ou seja, se o código não estiver na lista, a função imprime uma mensagem dizendo que o livro não existe e retorna sem fazer nada.
+ 
+Se o livro existe, a função verifica se há leitores aguardando para pegar o livro na fila de empréstimos. Caso não haja leitores na fila (ou seja, a fila esteja vazia), a função imprime que não há ninguém aguardando e retorna, sem fazer a devolução.
+
 ```
 
 **Mostrar histórico** é uma função que verifica se há registros de empréstimos e conta quantas vezes cada livro já foi emprestado. O bloco começa verificando se a lista histórico está vazia ou não. Se não estiver vazia, o código continua. Em seguida, é criado um dicionário chamado qtd que vai guardar as quantidades de empréstimos para cada título.
@@ -228,6 +332,6 @@ while True:
 ## Desenvolvido por:
 | Alunos | RA | Turma|
 | -------- | ----- | ----------- |
-|Barbara Luani Rrebechi Santana|     |Turma C|
+|Barbara Luani Rrebechi Santana|1987862|Turma C|
 |Caio Garbin Silva|1988521|Turma C|
 |Daniele Barbosa Borges|1989236|Turma C |  
