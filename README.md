@@ -326,9 +326,6 @@ while True:
 
 ```
 
-
-
-
 ## Desenvolvido por:
 | Alunos | RA | Turma|
 | -------- | ----- | ----------- |
